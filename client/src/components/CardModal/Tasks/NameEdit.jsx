@@ -5,7 +5,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { isSafari } from 'react-device-detect';
 import { Button, Form, TextArea } from 'semantic-ui-react';
 
-import { useClosableForm, useField } from '../../../hooks';
+import { useField } from '../../../hooks';
 
 import styles from './NameEdit.module.scss';
 
@@ -29,12 +29,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
   const submit = useCallback(() => {
     const cleanValue = value.trim();
 
-    if (!cleanValue) {
-      field.current.ref.current.select();
-      return;
-    }
-
-    if (cleanValue !== defaultValue) {
+    if (cleanValue && cleanValue !== defaultValue) {
       onUpdate(cleanValue);
     }
 
@@ -64,10 +59,9 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
     [submit],
   );
 
-  const [handleFieldBlur, handleControlMouseOver, handleControlMouseOut] = useClosableForm(
-    close,
-    isOpened,
-  );
+  const handleFieldBlur = useCallback(() => {
+    submit();
+  }, [submit]);
 
   const handleSubmit = useCallback(() => {
     submit();
@@ -97,13 +91,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
         onBlur={handleFieldBlur}
       />
       <div className={styles.controls}>
-        {/* eslint-disable-next-line jsx-a11y/mouse-events-have-key-events */}
-        <Button
-          positive
-          content={t('action.save')}
-          onMouseOver={handleControlMouseOver}
-          onMouseOut={handleControlMouseOut}
-        />
+        <Button positive content={t('action.save')} />
       </div>
     </Form>
   );

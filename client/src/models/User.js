@@ -43,9 +43,13 @@ export default class extends BaseModel {
     organization: attr(),
     language: attr(),
     subscribeToOwnCards: attr(),
+    isAdmin: attr(),
+    isLocked: attr(),
+    isRoleLocked: attr(),
+    isDeletionLocked: attr(),
     deletedAt: attr(),
-    isAdmin: attr({
-      getDefault: () => false,
+    createdAt: attr({
+      getDefault: () => new Date(),
     }),
     isAvatarUpdating: attr({
       getDefault: () => false,
@@ -293,15 +297,15 @@ export default class extends BaseModel {
   static getOrderedUndeletedQuerySet() {
     return this.filter({
       deletedAt: null,
-    }).orderBy('id');
+    }).orderBy('createdAt');
   }
 
   getOrderedProjectManagersQuerySet() {
-    return this.projectManagers.orderBy('id');
+    return this.projectManagers.orderBy('createdAt');
   }
 
   getOrderedBoardMembershipsQuerySet() {
-    return this.boardMemberships.orderBy('id');
+    return this.boardMemberships.orderBy('createdAt');
   }
 
   getOrderedUnreadNotificationsQuerySet() {
@@ -309,7 +313,7 @@ export default class extends BaseModel {
       .filter({
         isRead: false,
       })
-      .orderBy('id', false);
+      .orderBy('createdAt', false);
   }
 
   getOrderedAvailableProjectsModelArray() {

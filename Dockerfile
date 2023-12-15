@@ -1,11 +1,17 @@
-FROM ghcr.io/plankanban/planka:base-latest as server-dependencies
+FROM node:18-alpine as server-dependencies
+
+RUN apk -U upgrade \
+  && apk add build-base python3 \
+  --no-cache
 
 WORKDIR /app
 
 COPY server/package.json server/package-lock.json .
 
 RUN npm install npm@latest --global \
-  && npm clean-install --omit=dev
+  && npm install pnpm --global \
+  && pnpm import \
+  && pnpm install --prod
 
 FROM node:lts AS client
 
@@ -14,14 +20,18 @@ WORKDIR /app
 COPY client/package.json client/package-lock.json .
 
 RUN npm install npm@latest --global \
-  && npm clean-install --omit=dev
+  && npm install pnpm --global \
+  && pnpm import \
+  && pnpm install --prod
 
 COPY client .
 RUN DISABLE_ESLINT_PLUGIN=true npm run build
 
-FROM ghcr.io/plankanban/planka:base-latest
+FROM node:18-alpine
 
-RUN apk del vips-dependencies --purge
+RUN apk -U upgrade \
+  && apk add bash \
+  --no-cache
 
 USER node
 WORKDIR /app

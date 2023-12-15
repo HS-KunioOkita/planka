@@ -219,6 +219,7 @@ const CardModal = React.memo(
                         onUserSelect={onUserAdd}
                         onUserDeselect={onUserRemove}
                       >
+                        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                         <button
                           type="button"
                           className={classNames(styles.attachment, styles.dueDate)}
@@ -268,6 +269,7 @@ const CardModal = React.memo(
                         onMove={onLabelMove}
                         onDelete={onLabelDelete}
                       >
+                        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                         <button
                           type="button"
                           className={classNames(styles.attachment, styles.dueDate)}
@@ -316,10 +318,11 @@ const CardModal = React.memo(
                       )}
                     </span>
                     {canEdit && (
+                      // eslint-disable-next-line jsx-a11y/control-has-associated-label
                       <button
-                        onClick={handleToggleStopwatchClick}
                         type="button"
                         className={classNames(styles.attachment, styles.dueDate)}
+                        onClick={handleToggleStopwatchClick}
                       >
                         <Icon
                           name={stopwatch.startedAt ? 'pause' : 'play'}
