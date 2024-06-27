@@ -5,6 +5,7 @@ import { isSafari } from 'react-device-detect';
 import { TextArea } from 'semantic-ui-react';
 
 import { useField } from '../../hooks';
+import { focusEnd } from '../../utils/element-helpers';
 
 import styles from './NameEdit.module.scss';
 
@@ -74,7 +75,7 @@ const NameEdit = React.forwardRef(({ children, defaultValue, onUpdate }, ref) =>
 
   useEffect(() => {
     if (isOpened) {
-      field.current.ref.current.select();
+      focusEnd(field.current.ref.current);
     }
   }, [isOpened]);
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -55,6 +55,7 @@ const CardModal = React.memo(
     onUpdate,
     onMove,
     onTransfer,
+    onDuplicate,
     onDelete,
     onUserAdd,
     onUserRemove,
@@ -80,6 +81,7 @@ const CardModal = React.memo(
     onClose,
   }) => {
     const [t] = useTranslation();
+    const [isLinkCopied, setIsLinkCopied] = useState(false);
 
     const isGalleryOpened = useRef(false);
 
@@ -139,6 +141,19 @@ const CardModal = React.memo(
         isSubscribed: !isSubscribed,
       });
     }, [isSubscribed, onUpdate]);
+
+    const handleDuplicateClick = useCallback(() => {
+      onDuplicate();
+      onClose();
+    }, [onDuplicate, onClose]);
+
+    const handleCopyLinkClick = useCallback(() => {
+      navigator.clipboard.writeText(window.location.href);
+      setIsLinkCopied(true);
+      setTimeout(() => {
+        setIsLinkCopied(false);
+      }, 5000);
+    }, []);
 
     const handleGalleryOpen = useCallback(() => {
       isGalleryOpened.current = true;
@@ -498,6 +513,18 @@ const CardModal = React.memo(
                     {t('action.move')}
                   </Button>
                 </CardMovePopup>
+                <Button fluid className={styles.actionButton} onClick={handleDuplicateClick}>
+                  <Icon name="copy outline" className={styles.actionIcon} />
+                  {t('action.duplicate')}
+                </Button>
+                <Button fluid className={styles.actionButton} onClick={handleCopyLinkClick}>
+                  <Icon name={isLinkCopied ? 'linkify' : 'unlink'} className={styles.actionIcon} />
+                  {isLinkCopied
+                    ? t('common.linkIsCopied')
+                    : t('action.copyLink', {
+                        context: 'title',
+                      })}
+                </Button>
                 <DeletePopup
                   title="common.deleteCard"
                   content="common.areYouSureYouWantToDeleteThisCard"
@@ -557,6 +584,7 @@ CardModal.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
+  onDuplicate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,

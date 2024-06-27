@@ -41,6 +41,7 @@ const Card = React.memo(
     onUpdate,
     onMove,
     onTransfer,
+    onDuplicate,
     onDelete,
     onUserAdd,
     onUserRemove,
@@ -187,6 +188,7 @@ const Card = React.memo(
                         onUpdate={onUpdate}
                         onMove={onMove}
                         onTransfer={onTransfer}
+                        onDuplicate={onDuplicate}
                         onDelete={onDelete}
                         onUserAdd={onUserAdd}
                         onUserRemove={onUserRemove}
@@ -240,6 +242,7 @@ Card.propTypes = {
   onUpdate: PropTypes.func.isRequired,
   onMove: PropTypes.func.isRequired,
   onTransfer: PropTypes.func.isRequired,
+  onDuplicate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onUserAdd: PropTypes.func.isRequired,
   onUserRemove: PropTypes.func.isRequired,

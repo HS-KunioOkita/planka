@@ -9,6 +9,8 @@ export default {
     dateTime: '$t(format:date) $t(format:time)',
     longDate: 'd MMM',
     longDateTime: "d MMMM 'à' p",
+    fullDate: 'd MMM y',
+    fullDateTime: "d MMMM y 'à' p",
   },
 
   translation: {
@@ -109,6 +111,10 @@ export default {
       project: 'Projet',
       projectNotFound_title: 'Projet introuvable',
       removeMember_title: 'Supprimer le membre',
+      searchLabels: 'Chercher une étiquette...',
+      searchMembers: 'Chercher un membre...',
+      searchUsers: 'Chercher un utilisateur...',
+      searchCards: 'Chercher une carte...',
       seconds: 'Secondes',
       selectBoard: 'Sélectionner une carte',
       selectList: 'Sélectionner une liste',
@@ -167,6 +173,7 @@ export default {
       deleteTask: 'Supprimer la tâche',
       deleteTask_title: 'Supprimer la tâche',
       deleteUser: "Supprimer l'utilisateur",
+      duplicate: 'Dupliquer',
       edit: 'Modifier',
       editDueDate_title: "Modifier la date d'échéance",
       editDescription_title: 'Éditer la description',

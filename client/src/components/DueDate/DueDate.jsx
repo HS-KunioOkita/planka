@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 
+import getDateFormat from '../../utils/get-date-format';
+
 import styles from './DueDate.module.scss';
 
 const SIZES = {
@@ -12,16 +14,27 @@ const SIZES = {
   MEDIUM: 'medium',
 };
 
-const FORMATS = {
+const LONG_DATE_FORMAT_BY_SIZE = {
   tiny: 'longDate',
   small: 'longDate',
   medium: 'longDateTime',
 };
 
+const FULL_DATE_FORMAT_BY_SIZE = {
+  tiny: 'fullDate',
+  small: 'fullDate',
+  medium: 'fullDateTime',
+};
+
 const DueDate = React.memo(({ value, size, isDisabled, onClick, isExpired }) => {
   const [t] = useTranslation();
-
   const wrapperClass = isExpired ? styles.wrapperExpired : styles.wrapper;
+
+  const dateFormat = getDateFormat(
+    value,
+    LONG_DATE_FORMAT_BY_SIZE[size],
+    FULL_DATE_FORMAT_BY_SIZE[size],
+  );
 
   const contentNode = (
     <span
@@ -31,7 +44,7 @@ const DueDate = React.memo(({ value, size, isDisabled, onClick, isExpired }) => 
         onClick && styles.wrapperHoverable,
       )}
     >
-      {t(`format:${FORMATS[size]}`, {
+      {t(`format:${dateFormat}`, {
         value,
         postProcess: 'formatDate',
       })}

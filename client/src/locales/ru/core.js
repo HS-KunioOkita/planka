@@ -9,6 +9,8 @@ export default {
     dateTime: '$t(format:date) $t(format:time)',
     longDate: 'd MMM',
     longDateTime: "d MMMM 'в' p",
+    fullDate: 'd MMM y',
+    fullDateTime: "d MMMM y 'в' p",
   },
 
   translation: {
@@ -140,6 +142,7 @@ export default {
       searchLabels: 'Поиск меток...',
       searchMembers: 'Поиск участников...',
       searchUsers: 'Поиск пользователей...',
+      searchCards: 'Поиск карточек...',
       seconds: 'Секунды',
       selectBoard: 'Выберите доску',
       selectList: 'Выберите список',
@@ -197,6 +200,8 @@ export default {
       deleteProject: 'Удалить проект',
       deleteTask: 'Удалить задачу',
       deleteUser: 'Удалить пользователя',
+      duplicate: 'Дублировать',
+      duplicateCard_title: 'Дублировать карточку',
       edit: 'Изменить',
       editBackground: 'Изменить фон',
       editDueDate: 'Изменить срок',
@@ -228,6 +233,7 @@ export default {
       showAllAttachments: 'Показать все вложения ({{hidden}} скрыто)',
       showDetails: 'Показать подробности',
       showFewerAttachments: 'Показать меньше вложений',
+      sortList_title: 'Сортировать список',
       start: 'Начать',
       stop: 'Остановить',
       subscribe: 'Подписаться',

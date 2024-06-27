@@ -46,6 +46,7 @@ export default class extends BaseModel {
     isAdmin: attr(),
     isLocked: attr(),
     isRoleLocked: attr(),
+    isUsernameLocked: attr(),
     isDeletionLocked: attr(),
     deletedAt: attr(),
     createdAt: attr({
@@ -357,5 +358,19 @@ export default class extends BaseModel {
         deletedAt: new Date(),
       },
     );
+  }
+
+  static findUsersFromText(filterText, users) {
+    const selectUser = filterText.toLocaleLowerCase();
+    const matchingUsers = users.filter(
+      (user) =>
+        user.name.toLocaleLowerCase().startsWith(selectUser) ||
+        user.username.toLocaleLowerCase().startsWith(selectUser),
+    );
+    if (matchingUsers.length === 1) {
+      // Appens the user to the filter
+      return matchingUsers[0].id;
+    }
+    return null;
   }
 }

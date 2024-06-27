@@ -9,6 +9,8 @@ export default {
     dateTime: '$t(format:date) $t(format:time)',
     longDate: 'd. MMM',
     longDateTime: "d. MMMM 'um' p",
+    fullDate: 'd. MMM. y',
+    fullDateTime: "d. MMMM. y 'um' p",
   },
 
   translation: {
@@ -102,6 +104,7 @@ export default {
       language: 'Sprache',
       leaveBoard_title: 'Board verlassen',
       leaveProject_title: 'Projekt verlassen',
+      linkIsCopied: 'Link kopiert',
       list: 'Listen',
       listActions_title: 'Aufgaben auflisten',
       managers: 'Manager',
@@ -167,6 +170,7 @@ export default {
       addTask: 'Aufgabe hinzufügen',
       addToCard: 'Zu Karte hinzufügen',
       addUser: 'Benutzer hinzufügen',
+      copyLink_title: 'Link kopieren',
       createBoard: 'Board erstellen',
       createFile: 'Datei erstellen',
       createLabel: 'Label erstellen',

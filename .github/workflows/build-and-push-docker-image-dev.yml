@@ -1,3 +1,4 @@
+# https://docs.docker.com/build/ci/github-actions/multi-platform/
 name: Build and push Docker DEV image
 
 on:
@@ -8,9 +9,12 @@ on:
       - 'docker-*.sh'
       - '*.md'
     branches: [master]
+  workflow_dispatch:
+env:
+  REGISTRY_IMAGE: ghcr.io/${{ github.repository }}
 
 jobs:
-  build-and-push-docker-image-dev:
+  build:
     runs-on: self-hosted
     steps:
       - name: Checkout
@@ -29,11 +33,21 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Generate docker image tags
+        id: metadata
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY_IMAGE }}
+          tags: |
+            type=raw,value=dev
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: |
-            ghcr.io/plankanban/planka:dev
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

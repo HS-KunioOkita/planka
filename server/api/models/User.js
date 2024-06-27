@@ -5,7 +5,13 @@
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
+const OIDC = {
+  id: '_oidc',
+};
+
 module.exports = {
+  OIDC,
+
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
@@ -116,6 +122,7 @@ module.exports = {
       ..._.omit(this, ['password', 'isSso', 'avatar', 'passwordChangedAt']),
       isLocked: this.isSso || isDefaultAdmin,
       isRoleLocked: (this.isSso && !sails.config.custom.oidcIgnoreRoles) || isDefaultAdmin,
+      isUsernameLocked: (this.isSso && !sails.config.custom.oidcIgnoreUsername) || isDefaultAdmin,
       isDeletionLocked: isDefaultAdmin,
       avatarUrl:
         this.avatar &&
