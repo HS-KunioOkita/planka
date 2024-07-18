@@ -12,6 +12,7 @@ module.exports = {
 
   exits: {
     invalidCodeOrNonce: {},
+    invalidUserinfoSignature: {},
     missingValues: {},
     emailAlreadyInUse: {},
     usernameAlreadyInUse: {},
@@ -34,6 +35,14 @@ module.exports = {
       );
       userInfo = await client.userinfo(tokenSet);
     } catch (e) {
+      if (
+        e instanceof SyntaxError &&
+        e.message.includes('Unexpected token e in JSON at position 0')
+      ) {
+        sails.log.warn('Error while exchanging OIDC code: userinfo response is signed');
+        throw 'invalidUserinfoSignature';
+      }
+
       sails.log.warn(`Error while exchanging OIDC code: ${e}`);
       throw 'invalidCodeOrNonce';
     }
