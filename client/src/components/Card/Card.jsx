@@ -24,6 +24,7 @@ const Card = React.memo(
     index,
     name,
     dueDate,
+    isDueDateCompleted,
     stopwatch,
     coverUrl,
     boardId,
@@ -122,7 +123,12 @@ const Card = React.memo(
               )}
               {dueDate && (
                 <span className={classNames(styles.attachment, styles.attachmentLeft)}>
-                  <DueDate value={dueDate} size="tiny" isExpired={isExpiredDueDate} />
+                  <DueDate
+                    value={dueDate}
+                    isCompleted={isDueDateCompleted}
+                    isExpired={isExpiredDueDate}
+                    size="tiny"
+                  />
                 </span>
               )}
               {stopwatch && (
@@ -223,6 +229,7 @@ Card.propTypes = {
   index: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   dueDate: PropTypes.instanceOf(Date),
+  isDueDateCompleted: PropTypes.bool,
   stopwatch: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   coverUrl: PropTypes.string,
   boardId: PropTypes.string.isRequired,
@@ -257,6 +264,7 @@ Card.propTypes = {
 
 Card.defaultProps = {
   dueDate: undefined,
+  isDueDateCompleted: undefined,
   stopwatch: undefined,
   coverUrl: undefined,
 };

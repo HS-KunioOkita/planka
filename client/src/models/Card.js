@@ -20,6 +20,7 @@ export default class extends BaseModel {
       relatedName: 'ownCards',
     }),
     dueDate: attr(),
+    isDueDateCompleted: attr(),
     stopwatch: attr(),
     isSubscribed: attr({
       getDefault: () => false,
@@ -208,7 +209,16 @@ export default class extends BaseModel {
         if (payload.data.boardId && payload.data.boardId !== cardModel.boardId) {
           cardModel.deleteWithRelated();
         } else {
-          cardModel.update(payload.data);
+          cardModel.update({
+            ...payload.data,
+            ...(payload.data.dueDate === null && {
+              isDueDateCompleted: null,
+            }),
+            ...(payload.data.dueDate &&
+              !cardModel.dueDate && {
+                isDueDateCompleted: false,
+              }),
+          });
         }
 
         break;
@@ -248,6 +258,7 @@ export default class extends BaseModel {
             'name',
             'description',
             'dueDate',
+            'isDueDateCompleted',
             'stopwatch',
           ]),
           ...payload.card,

@@ -80,6 +80,10 @@ module.exports = {
       custom: dueDateValidator,
       allowNull: true,
     },
+    isDueDateCompleted: {
+      type: 'boolean',
+      allowNull: true,
+    },
     stopwatch: {
       type: 'json',
       custom: stopwatchValidator,
@@ -173,6 +177,7 @@ module.exports = {
       'name',
       'description',
       'dueDate',
+      'isDueDateCompleted',
       'stopwatch',
       'isSubscribed',
     ]);

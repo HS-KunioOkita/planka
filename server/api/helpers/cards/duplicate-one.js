@@ -77,6 +77,7 @@ module.exports = {
         'name',
         'description',
         'dueDate',
+        'isDueDateCompleted',
         'stopwatch',
       ]),
       ...values,
